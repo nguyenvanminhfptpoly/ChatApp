@@ -34,15 +34,17 @@ public class SignUpActivity extends AppCompatActivity {
                 LastName = binding.edittextLastName.getText().toString();
                 UserName = binding.edittextUserName.getText().toString();
                 Password = binding.edittextPassword.getText().toString();
-
+                if (firstName.isEmpty() && LastName.isEmpty() && UserName.isEmpty() && Password.isEmpty()) {
+                    Toast.makeText(SignUpActivity.this, "Nhập đủ dữ liệu", Toast.LENGTH_SHORT).show();
+                } else {
 
                     database = FirebaseDatabase.getInstance();
-                    myRef  = database.getReference(USERS).child(UserName);
+                    myRef = database.getReference(USERS).child(UserName);
 
                     myRef.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            if(dataSnapshot.getValue() == null){
+                            if (dataSnapshot.getValue() == null) {
                                 User user = new User();
                                 user.firstname = firstName;
                                 user.lastname = LastName;
@@ -55,7 +57,7 @@ public class SignUpActivity extends AppCompatActivity {
                                         Toast.makeText(SignUpActivity.this, "Thêm thành công", Toast.LENGTH_SHORT).show();
                                     }
                                 });
-                            }else {
+                            } else {
                                 Toast.makeText(SignUpActivity.this, "Lỗi", Toast.LENGTH_SHORT).show();
                             }
                         }
@@ -68,7 +70,7 @@ public class SignUpActivity extends AppCompatActivity {
                 }
 
 
-
+            }
         });
     }
 }
